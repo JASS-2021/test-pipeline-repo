@@ -38,6 +38,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
         
+      - name: List1
+        run: |
+          ls -al
+          ls -al .build
       - name: Build
         uses: docker/build-push-action@v2
         with:
@@ -51,9 +55,19 @@ jobs:
           load: true
           cache-from: type=local,src=.build
           cache-to: type=local,dest=.build-new
+          
+      - name: List1
+        run: |
+          ls -al
+          ls -al .build
+          ls -al .build-new
       - name: Move cache
         run: |
           rm -rf .build
           mv .build-new .build
+      - name: List1
+        run: |
+          ls -al
+          ls -al .build
       
       
