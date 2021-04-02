@@ -1,0 +1,14 @@
+
+# Jetbrains IDE
+.idea
+
+# Swift Package Manager
+*.xcodeproj
+.swiftpm
+.build/
+
+# Xcode User settings
+xcuserdata/
+
+# Other files
+.DS_Store
