@@ -5,14 +5,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends libsqlite3-dev
 
 # The usual copying over
 COPY Package.* ./
-COPY Sources ./Sources
-COPY Tests ./Tests
 
 RUN ls -al
 # Resolve the SPM dependencies
 RUN swift package resolve
+
 RUN ls -al
 RUN ls -al .build
+
+# Copy the source code
+COPY Sources ./Sources
+COPY Tests ./Tests
+
 
 # Build the application
 RUN swift build --configuration release
