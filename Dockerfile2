@@ -23,7 +23,7 @@ COPY Sources ./Sources
 COPY Tests ./Tests
 
 # Build the application
-RUN swift build --configuration release
+RUN swift build --configuration debug
 
 # Compress .build folder
 RUN tar -cvf ${ARCH}.tar .build/
