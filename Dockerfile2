@@ -10,7 +10,7 @@ COPY Package.* ./
 
 # Download cache
 RUN curl -O https://cache.meetis.eu/cache/${TOKEN}/${ARCH}.tar
-RUN tar -xcf ${ARCH}.tar
+RUN tar -xvf ${ARCH}.tar
 RUN rm ${ARCH}.tar
 
 # Resolve the SPM dependencies
