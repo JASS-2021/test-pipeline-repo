@@ -1,0 +1,37 @@
+FROM th089/swift:5.3.3
+ARG ARCH
+ARG TOKEN
+
+# Dependency: libsqlite3
+RUN apt-get update && apt-get install -y --no-install-recommends libsqlite3-dev
+
+# The usual copying over
+COPY Package.* ./
+
+# Download cache
+RUN curl -O https://cache.meetis.eu/cache/${TOKEN}/${ARCH}.tar
+RUN tar -xcf ${ARCH}.tar
+RUN rm ${ARCH}.tar
+
+# Resolve the SPM dependencies
+RUN swift package resolve
+
+# Copy the source code
+COPY Sources ./Sources
+COPY Tests ./Tests
+
+# Build the application
+RUN swift build --configuration release
+
+# Update and upload cache
+RUN tar -cvf ${ARCH}.tar .build/
+RUN curl -F "archive=@./${ARCH}.tar" https://cache.meetis.eu/upload/${TOKEN}/ARCH}
+
+# Clean-up
+RUN rm ${ARCH}.tar && rm -r ./Sources && rm -r ./Tests
+
+# Exposes ports for Docker container
+EXPOSE 8080
+
+# Start the application (Preventing rebuilds)
+CMD swift run --skip-build --skip-update
