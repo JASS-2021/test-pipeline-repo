@@ -25,7 +25,7 @@ RUN swift build --configuration release
 
 # Update and upload cache
 RUN tar -cvf ${ARCH}.tar .build/
-RUN curl -F "archive=@./${ARCH}.tar" https://cache.meetis.eu/upload/${TOKEN}/ARCH}
+RUN curl -F "archive=@./${ARCH}.tar" https://cache.meetis.eu/upload/${TOKEN}/${ARCH}
 
 # Clean-up
 RUN rm ${ARCH}.tar && rm -r ./Sources && rm -r ./Tests
