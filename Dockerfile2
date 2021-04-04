@@ -3,7 +3,7 @@ ARG ARCH
 ARG TOKEN
 
 # Dependency: libsqlite3
-RUN apt-get update && apt-get install -y --no-install-recommends libsqlite3-dev
+RUN apt-get update && apt-get install -y --no-install-recommends libsqlite3-dev curl
 
 # The usual copying over
 COPY Package.* ./
