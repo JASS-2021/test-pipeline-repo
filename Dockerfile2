@@ -10,7 +10,9 @@ COPY Package.* ./
 
 # Download cache
 RUN curl -O https://cache.meetis.eu/cache/${TOKEN}/${ARCH}.tar
+# Extract cache
 RUN tar -xvf ${ARCH}.tar
+# Remove archive
 RUN rm ${ARCH}.tar
 
 # Resolve the SPM dependencies
@@ -23,8 +25,9 @@ COPY Tests ./Tests
 # Build the application
 RUN swift build --configuration release
 
-# Update and upload cache
+# Compress .build folder
 RUN tar -cvf ${ARCH}.tar .build/
+# Upload .build archive to cache server
 RUN curl -F "archive=@./${ARCH}.tar" https://cache.meetis.eu/upload/${TOKEN}/${ARCH}
 
 # Clean-up
